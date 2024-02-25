@@ -14,6 +14,7 @@ gem "jbuilder",        "2.11.5"
 gem "puma",            "~>6"
 gem "bootsnap",        "1.16.0", require: false
 gem "mysql2"
+gem 'bcrypt', '~> 3.1.7'
 
 
 group :development, :test do
