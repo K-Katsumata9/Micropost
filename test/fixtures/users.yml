@@ -1,0 +1,24 @@
+david:
+  name: David Heinemeier Hansson
+  email: sample1@gmail.com
+  password_digest: <%= User.digest('foobar') %> 
+
+steve:
+  name: Steve Ross Kellock
+  email: sample2@gmail.com
+  password_digest: <%= User.digest('foobar') %> 
+
+Ann:
+  name: Ann Marie
+  email: sample3@gmail.com
+  password_digest: <%= User.digest('foobar') %> 
+
+John:
+  name: Johon Smith
+  email: sample4@gmail.com
+  password_digest: <%= User.digest('foobar') %> 
+  
+Kohh:
+  name: Yuki Chiba
+  email: sample5@gmail.com
+  password_digest: <%= User.digest('foobar') %> 
