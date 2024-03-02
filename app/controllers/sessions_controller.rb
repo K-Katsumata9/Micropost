@@ -8,18 +8,19 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:session][:email]) 
     if @user && @user.authenticate(params[:session][:password])
       reset_session      # ログインの直前に必ずこれを書くこと
+      params[:session][:remember_me] == "1" ? remember(@user) : forget(@user)
       log_in(@user)
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Success Login!"
       redirect_to user_url(@user)
     else 
-      flash.now[:danger] = 'Invalid email/password combination' # 本当は正しくない
+      flash.now[:danger] = 'Invalid email/password combination'
       render 'sessions/new', status: :unprocessable_entity
     end
   end
 
   def destroy
-    log_out
-    redirect_to root_path, status: :see_other
+    log_out if logged_in?
+    redirect_to root_url, status: :see_other
   end
 
 end
