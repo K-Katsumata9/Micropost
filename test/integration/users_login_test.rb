@@ -6,12 +6,6 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     @user = users(:david)
   end
 
-  #テストユーザーとしてログインする
-  def log_in_as(user,remember_me)
-    post login_path,  params: { 
-      session: { email: user.email, password: "foobar", remember_me: remember_me } }
-  end
-
   test "login with valid email/invalid password" do
     get login_path
     assert_template "sessions/new"
@@ -58,12 +52,12 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   end
 
   test "login with remembering" do
-    log_in_as(@user,1)
+    log_in_as(@user)
     assert_not cookies[:remember_token].blank?
   end
 
   test "login without remembering" do
-    log_in_as(@user,0)
+    log_in_as(@user,remember_me: "0")
     assert cookies[:remember_token].blank?
   end
 

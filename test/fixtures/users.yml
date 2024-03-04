@@ -2,6 +2,7 @@ david:
   name: David Heinemeier Hansson
   email: sample1@gmail.com
   password_digest: <%= User.digest('foobar') %> 
+  admin: true
 
 steve:
   name: Steve Ross Kellock
@@ -22,3 +23,10 @@ Kohh:
   name: Yuki Chiba
   email: sample5@gmail.com
   password_digest: <%= User.digest('foobar') %> 
+
+<% 30.times do |n| %>
+user_<%= n %>:
+  name:  <%= "User #{n}" %>
+  email: <%= "user-#{n}@gmail.com" %>
+  password_digest: <%= User.digest('foobar') %>
+<% end %>

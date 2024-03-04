@@ -14,8 +14,10 @@ gem "jbuilder",        "2.11.5"
 gem "puma",            "~>6"
 gem "bootsnap",        "1.16.0", require: false
 gem "mysql2"
-gem 'bcrypt', '~> 3.1.7'
-
+gem 'bcrypt',          "~> 3.1.7"
+gem "faker",           "~>3.2"
+gem "will_paginate",   "3.3.1"
+gem 'bootstrap-will_paginate', '~> 1.0'
 
 group :development, :test do
   gem "debug",   "1.7.1", platforms: %i[ mri mingw x64_mingw ]
