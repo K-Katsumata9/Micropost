@@ -1,9 +1,10 @@
 require "test_helper"
 
-class UsersLoginTest < ActionDispatch::IntegrationTest
+class UsersIndex < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:david)
+    @user1 = users(:steve)
   end
 
   test "login with valid email/invalid password" do
@@ -59,6 +60,21 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   test "login without remembering" do
     log_in_as(@user,remember_me: "0")
     assert cookies[:remember_token].blank?
+  end
+
+  test "should display only activated users" do
+    # ページにいる最初のユーザーを無効化する。
+    # 無効なユーザーを作成するだけでは、
+    # Railsで最初のページに表示される保証がないので不十分
+    log_in_as(@user)
+    get users_path
+    User.paginate(page: 1).first.toggle(:activated)
+    # /usersを再度取得して、無効化済みのユーザーが表示されていないことを確かめる
+    get users_path      
+    # 表示されているすべてのユーザーが有効化済みであることを確かめる
+    assigns(:users).each do |user|
+      assert user.activated?
+    end
   end
 
 end

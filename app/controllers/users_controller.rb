@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :admin_user, only: [:destroy]
 
   def index
-    @users = User.paginate(page: params[:page], per_page: 10)
+    @users = User.where(activated: 1 ).paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -13,15 +13,15 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find_by(id: params[:id])
+    redirect_to root_url and return unless @user.activated?
   end 
 
   def create
     @user = User.new(user_params)
     if @user.save
-      reset_session      # ログインの直前に必ずこれを書くこと
-      log_in(@user)
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to user_url(@user)
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'users/new', status: :unprocessable_entity
     end
@@ -45,9 +45,15 @@ class UsersController < ApplicationController
       flash[:success] = "Delete Completed!"
       redirect_to users_url, status: :see_other      
     end
-    
+  end
 
-  end 
+  def activation_email
+    if @user = User.find_by(confirmation_token: params[:token])
+      unless @user.expired?
+        @user.activate
+      end
+    end
+  end
 
   private
 
