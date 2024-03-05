@@ -1,5 +1,5 @@
   class User < ApplicationRecord
-    attr_accessor :remember_token, :activation_token, :remember_me
+    attr_accessor :remember_token, :activation_token, :reset_token, :remember_me
     before_save :downcase_email
     before_create :create_activation_digest
 
@@ -34,7 +34,7 @@
 
     # セッションハイジャック防止のためにセッショントークンを返す
     def session_token
-      remember_digest || remember
+      self.remember_digest || remember
     end
 
     # 渡されたトークンがダイジェストと一致したらtrueを返す
@@ -49,10 +49,6 @@
     def forget
       update_attribute(:remember_digest, nil)
     end
-
-    def expired?
-       Time.now < self.created_at + 10.minutes
-    end
   
     def activate
       update_columns(activated: true, activated_at: Time.zone.now)
@@ -63,17 +59,34 @@
       UserMailer.account_activation(self).deliver_now
     end
 
+    # パスワードリセットメールを送信する
+    def send_password_reset_email
+      UserMailer.password_reset(self).deliver_now
+      self.update_attribute(:reset_sent_at, Time.zone.now)
+    end
+
+    # 有効化トークンとダイジェストを作成および代入する
+    def create_reset_digest
+      self.reset_token = User.new_token
+      self.reset_digest = User.digest(reset_token)
+    end
+    
+    # パスワード再設定の期限が切れている場合はtrueを返す
+    def password_reset_expired?
+      self.reset_sent_at < 10.minutes.ago
+    end
+
     private
 
       # メールアドレスをすべて小文字にする
       def downcase_email
         self.email = self.email.downcase
       end
-      
-      # 有効化トークンとダイジェストを作成および代入する
-      def create_activation_digest
-        self.activation_token  = User.new_token
+
+       # 有効化トークンとダイジェストを作成および代入する
+       def create_activation_digest
+        self.activation_token = User.new_token
         self.activation_digest = User.digest(activation_token)
       end
-
+      
   end 

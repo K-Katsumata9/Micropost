@@ -3,6 +3,8 @@ require "test_helper"
 class UsersSignup < ActionDispatch::IntegrationTest
 
   def setup
+    @user = users(:david)
+    @user1 = users(:steve)
     ActionMailer::Base.deliveries.clear
   end
 end
