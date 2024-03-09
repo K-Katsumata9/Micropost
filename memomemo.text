@@ -1,0 +1,64 @@
+input_line = gets.chomp
+int = input_line.to_s.length #入力文字の個数
+array = input_line.chars.map(&:to_i)#入力文字を配列にする
+kaisuu = int/3 #反復する回数
+
+zero = "..."
+one = "#.."
+two = "##."
+three = "###"
+
+def oneline(int)
+   if 3<=f
+    puts "###"
+   elsif 2 == int
+    putsh "##."
+   elsif 1 == int 
+    puts "#.."
+   else 
+    puts "..."
+   end
+end
+
+def twoline(int)
+   if 6<=int
+    puts "###"
+   elsif 5 == int
+    putsh "##."
+   elsif 4 == int
+    puts "#.."
+   else 
+    puts "..."
+   end
+end
+
+def threeline(int)
+   if 9<=int
+    puts "###"
+   elsif 8 == int
+    putsh "##."
+   elsif 7 == int
+    puts "#.."
+   else 
+    puts "..."
+   end
+end
+
+def hanpuku(kaisuu)
+    kaisuu.times do 
+        ブロックの作り方
+    end
+end
+
+
+def under(int)
+    if int == 0 || 
+        ...
+    elseif int == 1 || 4 || 7
+        #..
+    elseif int == 2 
+        ##.
+    else 
+        ###
+    end
+end

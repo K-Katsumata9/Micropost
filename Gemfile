@@ -18,6 +18,9 @@ gem 'bcrypt',          "~> 3.1.7"
 gem "faker",           "~>3.2"
 gem "will_paginate",   "3.3.1"
 gem 'bootstrap-will_paginate', '~> 1.0'
+gem "image_processing", '~> 1.2'
+gem 'mini_magick', '~> 4.12'
+gem 'active_storage_validations', '~> 1.1'
 
 group :development, :test do
   gem "debug",   "1.7.1", platforms: %i[ mri mingw x64_mingw ]
