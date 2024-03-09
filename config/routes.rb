@@ -9,8 +9,9 @@ Rails.application.routes.draw do
   resources :users
 
   resources :account_activations, only:[:edit]
-  resources :password_resets, only:[:new,:create,:edit,:update]
-
+  resources :password_resets,     only:[:new,:create,:edit,:update]
+  resources :posts,               only:[:create,:destroy]  
+  
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'

@@ -2,6 +2,8 @@
     attr_accessor :remember_token, :activation_token, :reset_token, :remember_me
     before_save :downcase_email
     before_create :create_activation_digest
+    
+    has_many :posts, dependent: :destroy
 
     validates :name, presence: true, length: { maximum: 50 }
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -74,6 +76,10 @@
     # パスワード再設定の期限が切れている場合はtrueを返す
     def password_reset_expired?
       self.reset_sent_at < 10.minutes.ago
+    end
+
+    def feed
+      Post.where("user_id = ?", id)
     end
 
     private

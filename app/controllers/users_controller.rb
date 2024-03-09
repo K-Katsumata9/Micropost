@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find_by(id: params[:id])
+    @posts = @user.posts.paginate(page: params[:page], per_page: 10)
     redirect_to root_url and return unless @user.activated?
   end 
 
@@ -56,14 +57,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-    def logged_in_user?
-      if current_user.nil?
-        flash[:danger] = 'Please Login!'
-        store_location
-        redirect_to login_path, status: :see_other
-      end
-    end
 
     def correct_user
       @user = User.find(params[:id])

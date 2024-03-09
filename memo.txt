@@ -1,0 +1,20 @@
+#１ブロック目
+def block
+    array.each do |i|
+        oneline(f)
+    end
+    puts "\n"
+    array.each do |i|
+        twoline(f)
+    end
+    puts "\n"
+    array.each do |i|
+        threeline(f)
+    end
+    puts "\n"
+end
+
+kaisuu.times do
+    block
+    puts "\n"
+end
