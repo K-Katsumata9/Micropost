@@ -17,7 +17,6 @@
 その後、次のコマンドで必要になる RubyGems をインストールします。
 
 ```
-$ gem install bundler -v 2.5.6
 $ bundle install
 ```
 
